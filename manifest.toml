@@ -45,6 +45,7 @@ ram.runtime = "50M"
     [resources.sources.main]
     url = "https://github.com/journiv/journiv-app/archive/refs/tags/v0.1.0-beta.12.tar.gz"
     sha256 = "b2d99e1009e31a6a9bfaa7385192aa5d8ff78581c537e7a7fe3e0822b8492ea4"
+    
     autoupdate.strategy = "latest_github_tag"
 
     [resources.system_user]
