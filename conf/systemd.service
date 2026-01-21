@@ -16,7 +16,6 @@ ExecStart=__INSTALL_DIR__/venv/bin/gunicorn app.main:app \
   --error-logfile -
 Restart=always
 RestartSec=10
-KillMode=mixed
 
 [Install]
 WantedBy=multi-user.target
