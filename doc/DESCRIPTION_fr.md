@@ -1,0 +1,1 @@
+Journiv est un journal intime privé auto-hébergé. Il offre des fonctionnalités complètes de journalisation, notamment le suivi de l'humeur, la journalisation basée sur des invites, le téléchargement de médias, des analyses et une recherche avancée, le tout avec une interface utilisateur épurée et minimaliste.
