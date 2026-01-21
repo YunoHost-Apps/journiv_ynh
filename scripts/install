@@ -51,6 +51,8 @@ pushd $install_dir
     ynh_hide_warnings $install_dir/venv/bin/pip install gunicorn
 popd
 
+chmod -R 775 "$install_dir"
+chmod o-rwx "$install_dir"
 chown -R $app:$app "$install_dir"
 
 #=================================================
