@@ -50,7 +50,7 @@ pushd $install_dir
     echo "source $install_dir/venv/bin/activate" >> $install_dir/.bashrc
     source $install_dir/venv/bin/activate
     ynh_hide_warnings $install_dir/venv/bin/pip install -r requirements/prod.txt
-    alembic upgrade head
+    ynh_hide_warnings alembic upgrade head
     deactivate
 popd
 
