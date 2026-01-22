@@ -43,8 +43,9 @@ yunohost service add "$app" --description="Self hosted private journaling" --log
 # RESTORE VARIOUS FILES
 #=================================================
 
-ynh_restore "/var/log/$app/"
-chown -R "$app:$app" "/var/log/$app"
+mkdir -p "/var/log/$app/"
+touch "/var/log/$app/$app.log"
+chown -R $app:$app /var/log/$app/
 
 #=================================================
 # RELOAD NGINX AND PHP-FPM OR THE APP SERVICE
