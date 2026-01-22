@@ -56,6 +56,15 @@ chmod o-rwx "$install_dir"
 chown -R $app:$app "$install_dir"
 
 #=================================================
+# SETUP LOGROTATE
+#=================================================
+ynh_script_progression "Configuring log rotation..."
+
+    mkdir -p "/var/log/$app"
+    chown -R "$app:$app" "/var/log/$app"
+    ynh_config_add_logrotate
+
+#=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
