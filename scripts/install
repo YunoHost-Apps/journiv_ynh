@@ -48,7 +48,7 @@ ynh_script_progression "Installing Python dependencies..."
 pushd $install_dir
     python3 -m venv $install_dir/venv
     ynh_hide_warnings $install_dir/venv/bin/pip install -r requirements/prod.txt
-    ynh_hide_warnings $install_dir/venv/bin/pip install gunicorn
+    #ynh_hide_warnings $install_dir/venv/bin/pip install gunicorn
 popd
 
 chmod -R 775 "$install_dir"

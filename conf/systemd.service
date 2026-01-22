@@ -1,5 +1,5 @@
 [Unit]
-Description=Journiv: Journaling Application
+Description=Journiv: journaling application
 After=network.target postgresql.service
 
 [Service]
@@ -7,7 +7,7 @@ Type=notify
 User=__APP__
 Group=__APP__
 WorkingDirectory=__INSTALL_DIR__/
-Environment="PATH=__INSTALL_DIR__/venv/bin"
+KillMode=mixed
 ExecStart=__INSTALL_DIR__/venv/bin/gunicorn app.main:app \
   -w 4 \
   -k uvicorn.workers.UvicornWorker \
