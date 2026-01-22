@@ -23,7 +23,7 @@ ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".env venv"
 pushd $install_dir
     source $install_dir/venv/bin/activate
     ynh_hide_warnings $install_dir/venv/bin/pip install -r requirements/prod.txt
-    alembic upgrade head
+    ynh_hide_warnings alembic upgrade head
     deactivate
 popd
 
