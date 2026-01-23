@@ -12,7 +12,7 @@ version = "0.1.0~ynh1"
 maintainers = ["eric_G"]
 
 [upstream]
-license = "free"
+license = "PolyForm-Noncommercial-1.0.0"
 website = "https://www.journiv.com/"
 admindoc = "https://www.journiv.com/docs/installation"
 code = "https://github.com/journiv/journiv-app"
@@ -26,9 +26,9 @@ multi_instance = true
 ldap = false
 sso = false
 
-disk = "50M"
-ram.build = "50M"
-ram.runtime = "50M"
+disk = "200M"
+ram.build = "500M"
+ram.runtime = "500M"
 
 [install]
     [install.domain]
@@ -43,8 +43,9 @@ ram.runtime = "50M"
     [resources.sources]
 
     [resources.sources.main]
-    url = "https://github.com/journiv/journiv-app/archive/refs/tags/v0.1.0-beta.12.tar.gz"
-    sha256 = "b2d99e1009e31a6a9bfaa7385192aa5d8ff78581c537e7a7fe3e0822b8492ea4"
+    url = "https://github.com/journiv/journiv-app/archive/refs/tags/v0.1.0-beta.14.tar.gz"
+    sha256 = "35700843930261c5e6bf729bbc43917f5d714751d66f0bc2e708af181f2b4cce"
+    
     autoupdate.strategy = "latest_github_tag"
 
     [resources.system_user]

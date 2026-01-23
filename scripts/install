@@ -4,7 +4,6 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
-source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -12,6 +11,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 random_key=$(ynh_string_random --length=32)
+ynh_app_setting_set --key=random_key --value=$random_key
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -48,11 +48,26 @@ ynh_script_progression "Installing Python dependencies..."
 
 pushd $install_dir
     python3 -m venv $install_dir/venv
+    echo "source $install_dir/venv/bin/activate" >> $install_dir/.bashrc
+    source $install_dir/venv/bin/activate
     ynh_hide_warnings $install_dir/venv/bin/pip install -r requirements/prod.txt
-    ynh_hide_warnings $install_dir/venv/bin/pip install gunicorn
+    ynh_hide_warnings alembic upgrade head
+    deactivate
 popd
 
+chmod -R 775 "$install_dir"
+chmod o-rwx "$install_dir"
 chown -R $app:$app "$install_dir"
+
+#=================================================
+# SETUP LOGROTATE
+#=================================================
+ynh_script_progression "Configuring log rotation..."
+
+mkdir -p "/var/log/$app"
+chown -R "$app:$app" "/var/log/$app"
+
+ynh_config_add_logrotate
 
 #=================================================
 # START SYSTEMD SERVICE
