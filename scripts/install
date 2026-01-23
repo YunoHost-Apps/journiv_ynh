@@ -41,6 +41,13 @@ ynh_config_add_systemd
 
 yunohost service add "$app" --description="Self hosted private journaling" --log="/var/log/$app/$app.log"
 
+# Celery
+    ynh_config_add_systemd --service="$app-celery" --template="celery.service"
+    ynh_config_add_systemd --service="$app-celery-beat" --template="celery-beat.service"
+
+    yunohost service add "$app-celery" --description="Celery for $app" --log="/var/log/$app/celery-worker.log"
+    yunohost service add "$app-celery-beat" --description="Celery beat for $app" --log="/var/log/$app/celery-beat.log"
+
 #=================================================
 # INSTALL PYTHON DEPENDENCIES
 #=================================================
@@ -76,6 +83,10 @@ ynh_script_progression "Starting $app's systemd service..."
 
 # Start a systemd service
 ynh_systemctl --service="$app" --action="start"
+
+# Celery
+    ynh_systemctl --service="$app-celery" --action="start"
+    ynh_systemctl --service="$app-celery-beat" --action="start"
 
 #=================================================
 # END OF SCRIPT
