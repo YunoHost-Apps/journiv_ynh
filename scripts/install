@@ -13,8 +13,11 @@ source /usr/share/yunohost/helpers
 random_key=$(ynh_string_random --length=32)
 ynh_app_setting_set --key=random_key --value=$random_key
 
-ynh_app_setting_set --key=redis_db --value=$(ynh_redis_get_free_db)
-ynh_app_setting_set --key=celery_db --value=$(ynh_redis_get_free_db)
+redis_db=$(ynh_redis_get_free_db)
+celery_db=$(ynh_redis_get_free_db)
+
+ynh_app_setting_set --key=redis_db --value=$redis_db
+ynh_app_setting_set --key=celery_db --value=$celery_db
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
