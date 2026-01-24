@@ -26,6 +26,9 @@ ynh_config_change_url_nginx
 #=================================================
 ynh_script_progression "Adding $app's configuration files..."
 
+redis_db=$(ynh_app_setting_get --key=redis_db)
+celery_db=$(ynh_app_setting_get --key=celery_db)
+
 ynh_config_add --template=".env" --destination="$install_dir/.env"
 
 #=================================================
