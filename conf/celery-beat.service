@@ -1,0 +1,26 @@
+[Unit]
+Description=Celery Beat Service for __APP__
+After=network.target
+
+[Service]
+Type=simple
+User=__APP__
+Group=__APP__
+WorkingDirectory=__INSTALL_DIR__
+LogsDirectory=__APP__
+RuntimeDirectory=__APP__
+PrivateTmp=true
+
+ExecStart=__INSTALL_DIR__/venv/bin/celery -A app.core.celery_app beat \
+    --loglevel=INFO \
+    --logfile=/var/log/__APP__/celery-beat.log \
+    --pidfile=/run/__APP__/celerybeat.pid \
+    --schedule=/var/log/__APP__/celerybeat-schedule
+
+Restart=always
+RestartSec=10
+Environment="PYTHONUNBUFFERED=1"
+Environment="PYTHONDONTWRITEBYTECODE=1"
+
+[Install]
+WantedBy=multi-user.target
