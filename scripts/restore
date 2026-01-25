@@ -36,8 +36,15 @@ ynh_restore "/etc/nginx/conf.d/$domain.d/$app.conf"
 
 ynh_restore "/etc/systemd/system/$app.service"
 systemctl enable "$app.service" --quiet
-
 yunohost service add "$app" --description="Self hosted private journaling" --log="/var/log/$app/$app.log"
+
+    ynh_restore "/etc/systemd/system/$app-celery.service"
+    yunohost service add "$app-celery" --description="Celery for $app" --log="/var/log/$app/celery-worker.log"
+    ynh_systemctl --service="$app-celery" --action="start"
+
+    ynh_restore "/etc/systemd/system/$app-celery-beat.service"
+    yunohost service add "$app-celery-beat" --description="Celery beat for $app" --log="/var/log/$app/celery-beat.log"
+    ynh_systemctl --service="$app-celery-beat" --action="start"
 
 #=================================================
 # RESTORE VARIOUS FILES

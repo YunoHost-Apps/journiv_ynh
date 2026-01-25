@@ -13,6 +13,12 @@ source /usr/share/yunohost/helpers
 random_key=$(ynh_string_random --length=32)
 ynh_app_setting_set --key=random_key --value=$random_key
 
+redis_db=$(ynh_redis_get_free_db)
+celery_db=$(ynh_redis_get_free_db)
+
+ynh_app_setting_set --key=redis_db --value=$redis_db
+ynh_app_setting_set --key=celery_db --value=$celery_db
+
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
@@ -40,6 +46,13 @@ ynh_config_add_nginx
 ynh_config_add_systemd
 
 yunohost service add "$app" --description="Self hosted private journaling" --log="/var/log/$app/$app.log"
+
+# Celery
+    ynh_config_add_systemd --service="$app-celery" --template="celery.service"
+    ynh_config_add_systemd --service="$app-celery-beat" --template="celery-beat.service"
+
+    yunohost service add "$app-celery" --description="Celery for $app" --log="/var/log/$app/celery-worker.log"
+    yunohost service add "$app-celery-beat" --description="Celery beat for $app" --log="/var/log/$app/celery-beat.log"
 
 #=================================================
 # INSTALL PYTHON DEPENDENCIES
@@ -76,6 +89,10 @@ ynh_script_progression "Starting $app's systemd service..."
 
 # Start a systemd service
 ynh_systemctl --service="$app" --action="start"
+
+# Celery
+    ynh_systemctl --service="$app-celery" --action="start"
+    ynh_systemctl --service="$app-celery-beat" --action="start"
 
 #=================================================
 # END OF SCRIPT
