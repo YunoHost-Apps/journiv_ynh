@@ -62,7 +62,7 @@ ynh_script_progression "Installing Mise dependencies..."
 # Set $home to $source_dir for mise
 # export HOME="$source_dir"
 # Add mise shims direcotry to $PATH
-PATH="$HOME/.local/share/mise/shims:$PATH"
+PATH="$install_dir/.local/share/mise/shims:$PATH"
 
 pushd $install_dir
     ynh_hide_warnings mise trust ./mise.toml
