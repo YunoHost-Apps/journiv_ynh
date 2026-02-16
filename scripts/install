@@ -60,9 +60,9 @@ yunohost service add "$app-celery-beat" --description="Celery beat for $app" --l
 ynh_script_progression "Installing Mise dependencies..."
 
 # Set $home to $source_dir for mise
-# export HOME="$source_dir"
+export HOME="$install_dir"
 # Add mise shims direcotry to $PATH
-PATH="$install_dir/.local/share/mise/shims:$PATH"
+PATH="$HOME/.local/share/mise/shims:$PATH"
 
 pushd $install_dir
     ynh_hide_warnings mise trust ./mise.toml
