@@ -11,7 +11,7 @@ LogsDirectory=__APP__
 RuntimeDirectory=__APP__
 PrivateTmp=true
 
-ExecStart=__INSTALL_DIR__/venv/bin/celery -A app.core.celery_app beat \
+ExecStart=__INSTALL_DIR__/.venv/bin/celery -A app.core.celery_app beat \
     --loglevel=INFO \
     --logfile=/var/log/__APP__/celery-beat.log \
     --pidfile=/run/__APP__/celerybeat.pid \

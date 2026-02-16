@@ -10,7 +10,7 @@ WorkingDirectory=__INSTALL_DIR__
 LogsDirectory=__APP__
 PrivateTmp=true
 
-ExecStart=__INSTALL_DIR__/venv/bin/celery -A app.core.celery_app worker \
+ExecStart=__INSTALL_DIR__/.venv/bin/celery -A app.core.celery_app worker \
     --loglevel=INFO \
     --logfile=/var/log/__APP__/celery-worker.log
 
