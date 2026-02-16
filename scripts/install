@@ -98,8 +98,8 @@ ynh_script_progression "Starting $app's systemd service..."
 ynh_systemctl --service="$app" --action="start"
 
 # Celery
-    ynh_systemctl --service="$app-celery" --action="start"
-    ynh_systemctl --service="$app-celery-beat" --action="start"
+ynh_systemctl --service="$app-celery" --action="start"
+ynh_systemctl --service="$app-celery-beat" --action="start"
 
 #=================================================
 # END OF SCRIPT
