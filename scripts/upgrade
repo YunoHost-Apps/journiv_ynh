@@ -18,13 +18,27 @@ ynh_systemctl --service="$app" --action="stop"
 #=================================================
 ynh_script_progression "Upgrading source files..."
 
-ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".env venv"
+ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".env .venv"
+
+#=================================================
+# UPDATE MISE DEPENDENCIES
+#=================================================
+ynh_script_progression "Installing Mise dependencies..."
+
+# Set $home to $install_dir for mise
+export HOME="$install_dir"
+# Add mise shims direcotry to $PATH
+PATH="$HOME/.local/share/mise/shims:$PATH"
 
 pushd $install_dir
-    source $install_dir/venv/bin/activate
-    ynh_hide_warnings $install_dir/venv/bin/pip install -r requirements/prod.txt
-    ynh_hide_warnings alembic upgrade head
-    deactivate
+    ynh_hide_warnings mise trust ./mise.toml
+    ynh_hide_warnings mise install
+
+    mise use uv --quiet
+    # Run DB migrations with uv in a subshell
+    (
+        uv run alembic upgrade head
+    )
 popd
 
 chmod -R 775 "$install_dir"
