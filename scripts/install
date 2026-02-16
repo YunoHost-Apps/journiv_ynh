@@ -73,6 +73,8 @@ pushd $install_dir
     # Run migrations
     #uv run alembic upgrade head
 
+    # Read python version from mise.toml
+    python_version=$(grep '^python\s*=' mise.toml | sed -E 's/python\s*=\s*"([^"]+)"/\1/')
     # Install uv
     mise use uv --quiet
     # Install with uv in a subshell
