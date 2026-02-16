@@ -62,10 +62,9 @@ ynh_script_progression "Installing Mise dependencies..."
 pushd $install_dir
     ynh_hide_warnings mise trust ./mise.toml
     ynh_hide_warnings mise install
-    ynh_hide_warnings mise run build
 
     # Install uv
-    mise use uv@latest --quiet
+    # mise use uv@latest --quiet
     # Run migrations
     uv run alembic upgrade head
 popd
