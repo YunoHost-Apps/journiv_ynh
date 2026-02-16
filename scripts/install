@@ -48,24 +48,26 @@ ynh_config_add_systemd
 yunohost service add "$app" --description="Self hosted private journaling" --log="/var/log/$app/$app.log"
 
 # Celery
-    ynh_config_add_systemd --service="$app-celery" --template="celery.service"
-    ynh_config_add_systemd --service="$app-celery-beat" --template="celery-beat.service"
+ynh_config_add_systemd --service="$app-celery" --template="celery.service"
+ynh_config_add_systemd --service="$app-celery-beat" --template="celery-beat.service"
 
-    yunohost service add "$app-celery" --description="Celery for $app" --log="/var/log/$app/celery-worker.log"
-    yunohost service add "$app-celery-beat" --description="Celery beat for $app" --log="/var/log/$app/celery-beat.log"
+yunohost service add "$app-celery" --description="Celery for $app" --log="/var/log/$app/celery-worker.log"
+yunohost service add "$app-celery-beat" --description="Celery beat for $app" --log="/var/log/$app/celery-beat.log"
 
 #=================================================
-# INSTALL PYTHON DEPENDENCIES
+# INSTALL MISE DEPENDENCIES
 #=================================================
-ynh_script_progression "Installing Python dependencies..."
+ynh_script_progression "Installing Mise dependencies..."
 
 pushd $install_dir
-    python3 -m venv $install_dir/venv
-    echo "source $install_dir/venv/bin/activate" >> $install_dir/.bashrc
-    source $install_dir/venv/bin/activate
-    ynh_hide_warnings $install_dir/venv/bin/pip install -r requirements/prod.txt
-    ynh_hide_warnings alembic upgrade head
-    deactivate
+    ynh_hide_warnings mise trust ./mise.toml
+    ynh_hide_warnings mise install
+    ynh_hide_warnings mise run build
+
+    # Install uv
+    mise use uv@latest --quiet
+    # Run migrations
+    uv run alembic upgrade head
 popd
 
 chmod -R 775 "$install_dir"
