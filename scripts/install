@@ -64,7 +64,7 @@ pushd $install_dir
     ynh_hide_warnings mise install
 
     # Install uv
-    # mise use uv@latest --quiet
+    mise use uv@latest --quiet
     # Run migrations
     uv run alembic upgrade head
 popd
