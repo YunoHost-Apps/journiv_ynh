@@ -23,7 +23,7 @@ ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".env .venv"
 #=================================================
 # UPDATE MISE DEPENDENCIES
 #=================================================
-ynh_script_progression "Installing Mise dependencies..."
+ynh_script_progression "Updating Mise dependencies..."
 
 # Set $home to $install_dir for mise
 export HOME="$install_dir"
@@ -34,7 +34,7 @@ pushd $install_dir
     ynh_hide_warnings mise trust ./mise.toml
     ynh_hide_warnings mise install
 
-    mise use uv --quiet
+    mise use python uv --quiet
     # Run DB migrations with uv in a subshell
     (
         uv run alembic upgrade head
@@ -63,11 +63,11 @@ ynh_config_add_systemd
 yunohost service add "$app" --description="Self hosted private journaling" --log="/var/log/$app/$app.log"
 
 # Celery
-    ynh_config_add_systemd --service="$app-celery" --template="celery.service"
-    ynh_config_add_systemd --service="$app-celery-beat" --template="celery-beat.service"
+ynh_config_add_systemd --service="$app-celery" --template="celery.service"
+ynh_config_add_systemd --service="$app-celery-beat" --template="celery-beat.service"
 
-    yunohost service add "$app-celery" --description="Celery for $app" --log="/var/log/$app/celery-worker.log"
-    yunohost service add "$app-celery-beat" --description="Celery beat for $app" --log="/var/log/$app/celery-beat.log"
+yunohost service add "$app-celery" --description="Celery for $app" --log="/var/log/$app/celery-worker.log"
+yunohost service add "$app-celery-beat" --description="Celery beat for $app" --log="/var/log/$app/celery-beat.log"
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -77,8 +77,8 @@ ynh_script_progression "Starting $app's systemd service..."
 ynh_systemctl --service="$app" --action="start"
 
 # Celery
-    ynh_systemctl --service="$app-celery" --action="start"
-    ynh_systemctl --service="$app-celery-beat" --action="start"
+ynh_systemctl --service="$app-celery" --action="start"
+ynh_systemctl --service="$app-celery-beat" --action="start"
 
 #=================================================
 # END OF SCRIPT

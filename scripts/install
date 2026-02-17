@@ -68,7 +68,7 @@ pushd $install_dir
     ynh_hide_warnings mise trust ./mise.toml
     ynh_hide_warnings mise install
 
-    mise use uv --quiet
+    mise use python uv --quiet
     # Run DB migrations with uv in a subshell
     (
         uv run alembic upgrade head
