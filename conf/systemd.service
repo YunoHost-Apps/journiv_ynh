@@ -8,7 +8,7 @@ User=__APP__
 Group=__APP__
 WorkingDirectory=__INSTALL_DIR__/
 KillMode=mixed
-ExecStart=__INSTALL_DIR__/.venv/bin/gunicorn app.main:app \
+ExecStart=__INSTALL_DIR__/.venv/bin/python -m gunicorn app.main:app \
   -w 4 \
   -k uvicorn.workers.UvicornWorker \
   --bind 127.0.0.1:__PORT__ \
