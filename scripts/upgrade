@@ -35,8 +35,8 @@ pushd $install_dir
     ynh_hide_warnings mise install
     #ynh_hide_warnings mise run install
 
-    $install_dir/.venv/bin/uv sync --all-groups --all-extras
-    $install_dir/.venv/bin/uv run alembic upgrade head
+    uv sync --all-groups --all-extras
+    uv run alembic upgrade head
 
     #mise use python uv --quiet
     # Run DB migrations with uv in a subshell
