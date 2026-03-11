@@ -26,9 +26,9 @@ ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".env .venv"
 ynh_script_progression "Updating Mise dependencies..."
 
 # Set $home to $install_dir for mise
-#export HOME="$install_dir"
+export HOME="$install_dir"
 # Add mise shims direcotry to $PATH
-#PATH="$HOME/.local/share/mise/shims:$PATH"
+PATH="$HOME/.local/share/mise/shims:$PATH"
 
 pushd $install_dir
     #ynh_hide_warnings mise trust ./mise.toml
