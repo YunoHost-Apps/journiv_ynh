@@ -37,7 +37,7 @@ pushd $install_dir
 
     uv sync --all-groups --all-extras
     uv run alembic upgrade head
-    mise use python uv
+    #mise use python uv
 
     #mise use python uv --quiet
     # Run DB migrations with uv in a subshell
