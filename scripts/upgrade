@@ -35,8 +35,8 @@ pushd $install_dir
     #ynh_hide_warnings mise install
     #ynh_hide_warnings mise run install
 
-    uv sync --all-groups --all-extras
-    uv run alembic upgrade head
+    $HOME/.local/share/mise/shims/uv sync --all-groups --all-extras
+    $HOME/.local/share/mise/shims/uv run alembic upgrade head
     #mise use python
 
     #mise use python uv --quiet
