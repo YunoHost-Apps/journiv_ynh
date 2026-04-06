@@ -35,11 +35,11 @@ pushd $install_dir
     #ynh_hide_warnings mise install
     #ynh_hide_warnings mise run install
 
-    mise use python
+    PY_VERSION=$(grep -Po '^python\s*=\s*"\K[0-9.]+' mise.toml)
 
-    mise run install:upgrade
-    #mise exec -- uv sync --all-groups --all-extras
-    mise exec -- uv run alembic upgrade head
+    mise exec python@$PY_VERSION -- mise run install:upgrade
+    mise exec python@$PY_VERSION -- uv sync --all-groups --all-extras
+    mise exec python@$PY_VERSION -- uv run alembic upgrade head
 
     #uv sync --all-groups --all-extras
     #uv run alembic upgrade head
