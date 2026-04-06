@@ -36,7 +36,9 @@ pushd $install_dir
     #ynh_hide_warnings mise run install
 
     mise use python
-    mise exec -- uv sync --all-groups --all-extras
+
+    mise run install:upgrade
+    #mise exec -- uv sync --all-groups --all-extras
     mise exec -- uv run alembic upgrade head
 
     #uv sync --all-groups --all-extras
