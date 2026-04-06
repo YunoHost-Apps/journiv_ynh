@@ -66,13 +66,12 @@ PATH="$HOME/.local/share/mise/shims:$PATH"
 
 pushd $install_dir
     ynh_hide_warnings mise trust ./mise.toml
-    ynh_hide_warnings mise install
 
-    mise use python uv --quiet
-    # Run DB migrations with uv in a subshell
-    (
-        uv run alembic upgrade head
-    )
+    PY_VERSION=$(grep -Po '^python\s*=\s*"\K[0-9.]+' mise.toml)
+    ynh_hide_warnings mise use -g python@$PY_VERSION
+
+    ynh_hide_warnings mise exec python@$PY_VERSION -- mise install
+    ynh_hide_warnings mise exec python@$PY_VERSION -- uv run alembic upgrade head
 popd
 
 chmod -R 775 "$install_dir"
