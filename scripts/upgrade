@@ -71,8 +71,6 @@ chown -R $app:$app "$install_dir"
 #=================================================
 ynh_script_progression "Upgrading system configurations related to $app..."
 
-ynh_config_add_nginx
-
 ynh_config_add_systemd
 yunohost service add "$app" --description="Self hosted private journaling" --log="/var/log/$app/$app.log"
 
@@ -82,6 +80,8 @@ ynh_config_add_systemd --service="$app-celery-beat" --template="celery-beat.serv
 
 yunohost service add "$app-celery" --description="Celery for $app" --log="/var/log/$app/celery-worker.log"
 yunohost service add "$app-celery-beat" --description="Celery beat for $app" --log="/var/log/$app/celery-beat.log"
+
+ynh_config_add_nginx
 
 #=================================================
 # START SYSTEMD SERVICE
