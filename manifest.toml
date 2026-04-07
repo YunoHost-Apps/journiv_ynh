@@ -62,7 +62,7 @@ ram.runtime = "500M"
     [resources.ports]
 
     [resources.apt]
-    packages = "postgresql, postgresql-contrib, python3-dev, python3-venv, python3, python3-pip, redis-server"
+    packages = "postgresql, postgresql-contrib, python3-dev, python3-venv, python3, redis-server"
 
 	[resources.apt.extras.mise]
 	repo = "deb https://mise.jdx.dev/deb stable main"
