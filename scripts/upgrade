@@ -81,8 +81,6 @@ ynh_config_add_systemd --service="$app-celery-beat" --template="celery-beat.serv
 yunohost service add "$app-celery" --description="Celery for $app" --log="/var/log/$app/celery-worker.log"
 yunohost service add "$app-celery-beat" --description="Celery beat for $app" --log="/var/log/$app/celery-beat.log"
 
-ynh_config_add_nginx
-
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
@@ -93,6 +91,8 @@ ynh_systemctl --service="$app" --action="start"
 # Celery
 ynh_systemctl --service="$app-celery" --action="start"
 ynh_systemctl --service="$app-celery-beat" --action="start"
+
+ynh_config_add_nginx
 
 #=================================================
 # END OF SCRIPT
