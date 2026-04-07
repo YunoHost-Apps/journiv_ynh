@@ -40,7 +40,7 @@ pushd $install_dir
     PY_VERSION=$(grep -Po '^python\s*=\s*"\K[0-9.]+' mise.toml)
     mise use -g python@$PY_VERSION
 
-    mise exec python@$PY_VERSION -- mise run install
+    mise exec python@$PY_VERSION -- mise install
     #mise exec python@$PY_VERSION -- uv sync --all-groups --all-extras
     mise exec python@$PY_VERSION -- uv run alembic upgrade head
 
