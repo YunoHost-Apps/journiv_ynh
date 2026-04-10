@@ -65,9 +65,9 @@ export HOME="$install_dir"
 PATH="$HOME/.local/share/mise/shims:$PATH"
 
 pushd $install_dir
-    PY_VERSION=$(grep -Po '^python\s*=\s*"\K[0-9.]+' mise.toml)
+    ynh_hide_warnings mise trust ./mise.toml
 
-    ynh_hide_warnings mise exec python@$PY_VERSION -- mise trust ./mise.toml
+    PY_VERSION=$(grep -Po '^python\s*=\s*"\K[0-9.]+' mise.toml)
     ynh_hide_warnings mise use -g python@$PY_VERSION
 
     ynh_hide_warnings mise exec python@$PY_VERSION -- mise install
