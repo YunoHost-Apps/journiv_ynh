@@ -27,34 +27,13 @@ ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".config .env .
 #=================================================
 ynh_script_progression "Updating Mise dependencies..."
 
-# Set $home to $install_dir for mise
-#export HOME="$install_dir"
-# Add mise shims direcotry to $PATH
-#PATH="$HOME/.local/share/mise/shims:$PATH"
 export MISE_DATA_DIR="/$install_dir/.local/share/mise"
 
-
 pushd $install_dir
-    ynh_hide_warnings mise trust ./mise.toml
-    #ynh_hide_warnings mise install
-    #ynh_hide_warnings mise run install
-
+    ynh_hide_warnings ynh_exec_as_app mise trust ./mise.toml
     PY_VERSION=$(grep -Po '^python\s*=\s*"\K[0-9.]+' mise.toml)
-    #mise use -g python@$PY_VERSION
-
-    ynh_exec_as_app mise exec python@$PY_VERSION -- mise run install
-    #mise exec python@$PY_VERSION -- uv sync --all-groups --all-extras
-    ynh_exec_as_app mise exec python@$PY_VERSION -- uv run alembic upgrade head
-
-    #uv sync --all-groups --all-extras
-    #uv run alembic upgrade head
-    #mise use python
-
-    #mise use python uv --quiet
-    # Run DB migrations with uv in a subshell
-    #(
-    #    uv run alembic upgrade head
-    #)
+    ynh_hide_warnings ynh_exec_as_app mise exec python@$PY_VERSION -- mise run install
+    ynh_hide_warnings ynh_exec_as_app mise exec python@$PY_VERSION -- uv run alembic upgrade head
 popd
 
 chown -R $app:$app "$install_dir"
