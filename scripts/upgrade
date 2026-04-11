@@ -42,9 +42,9 @@ pushd $install_dir
     PY_VERSION=$(grep -Po '^python\s*=\s*"\K[0-9.]+' mise.toml)
     #mise use -g python@$PY_VERSION
 
-    mise exec python@$PY_VERSION -- mise run install
+    ynh_exec_as_app mise exec python@$PY_VERSION -- mise run install
     #mise exec python@$PY_VERSION -- uv sync --all-groups --all-extras
-    mise exec python@$PY_VERSION -- uv run alembic upgrade head
+    ynh_exec_as_app mise exec python@$PY_VERSION -- uv run alembic upgrade head
 
     #uv sync --all-groups --all-extras
     #uv run alembic upgrade head
@@ -57,9 +57,9 @@ pushd $install_dir
     #)
 popd
 
-chmod -R 775 "$install_dir"
-chmod o-rwx "$install_dir"
 chown -R $app:$app "$install_dir"
+chmod -R 775 "$install_dir"
+chmod -R o-rwx "$install_dir"
 
 #=================================================
 # UPDATE A CONFIG FILE

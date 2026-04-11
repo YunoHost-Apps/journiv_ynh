@@ -66,18 +66,18 @@ ynh_script_progression "Installing Mise dependencies..."
 export MISE_DATA_DIR="/$install_dir/.local/share/mise"
 
 pushd $install_dir
-    ynh_hide_warnings mise trust ./mise.toml
+    ynh_hide_warnings ynh_exec_as_app mise trust ./mise.toml
 
     PY_VERSION=$(grep -Po '^python\s*=\s*"\K[0-9.]+' mise.toml)
     #ynh_hide_warnings mise use -g python@$PY_VERSION
 
-    ynh_hide_warnings mise exec python@$PY_VERSION -- mise install
-    ynh_hide_warnings mise exec python@$PY_VERSION -- uv run alembic upgrade head
+    ynh_hide_warnings ynh_exec_as_app mise exec python@$PY_VERSION -- mise install
+    ynh_hide_warnings ynh_exec_as_app mise exec python@$PY_VERSION -- uv run alembic upgrade head
 popd
 
-chmod -R 775 "$install_dir"
-chmod o-rwx "$install_dir"
 chown -R $app:$app "$install_dir"
+chmod -R 775 "$install_dir"
+chmod -R o-rwx "$install_dir"
 
 #=================================================
 # SETUP LOGROTATE
