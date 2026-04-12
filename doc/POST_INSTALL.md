@@ -1,0 +1,4 @@
+- You can register a user at <https://__DOMAIN__/register>
+- After registering your users it's recommended to disable public signups
+- Therefore edit `__INSTALL_DIR___/.env` and set `DISABLE_SIGNUP=true`
+- Then restart the journiv service `systemctl restart journiv.service`
