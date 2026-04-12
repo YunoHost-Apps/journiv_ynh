@@ -12,24 +12,33 @@ source /usr/share/yunohost/helpers
 ynh_script_progression "Stopping $app's systemd service..."
 
 ynh_systemctl --service="$app" --action="stop"
+ynh_systemctl --service="$app-celery" --action="stop"
+ynh_systemctl --service="$app-celery-beat" --action="stop"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression "Upgrading source files..."
 
-ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".env venv"
+ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".config .env .local .venv"
+
+#=================================================
+# UPDATE MISE DEPENDENCIES
+#=================================================
+ynh_script_progression "Updating Mise dependencies..."
+
+export MISE_DATA_DIR="/$install_dir/.local/share/mise"
 
 pushd $install_dir
-    source $install_dir/venv/bin/activate
-    ynh_hide_warnings $install_dir/venv/bin/pip install -r requirements/prod.txt
-    ynh_hide_warnings alembic upgrade head
-    deactivate
+    ynh_hide_warnings ynh_exec_as_app mise trust ./mise.toml
+    PY_VERSION=$(grep -Po '^python\s*=\s*"\K[0-9.]+' mise.toml)
+    ynh_hide_warnings ynh_exec_as_app mise exec python@$PY_VERSION -- mise run install
+    ynh_hide_warnings ynh_exec_as_app mise exec python@$PY_VERSION -- uv run alembic upgrade head
 popd
 
-chmod -R 775 "$install_dir"
-chmod o-rwx "$install_dir"
 chown -R $app:$app "$install_dir"
+chmod -R 775 "$install_dir"
+chmod -R o-rwx "$install_dir"
 
 #=================================================
 # UPDATE A CONFIG FILE
@@ -49,11 +58,11 @@ ynh_config_add_systemd
 yunohost service add "$app" --description="Self hosted private journaling" --log="/var/log/$app/$app.log"
 
 # Celery
-    ynh_config_add_systemd --service="$app-celery" --template="celery.service"
-    ynh_config_add_systemd --service="$app-celery-beat" --template="celery-beat.service"
+ynh_config_add_systemd --service="$app-celery" --template="celery.service"
+ynh_config_add_systemd --service="$app-celery-beat" --template="celery-beat.service"
 
-    yunohost service add "$app-celery" --description="Celery for $app" --log="/var/log/$app/celery-worker.log"
-    yunohost service add "$app-celery-beat" --description="Celery beat for $app" --log="/var/log/$app/celery-beat.log"
+yunohost service add "$app-celery" --description="Celery for $app" --log="/var/log/$app/celery-worker.log"
+yunohost service add "$app-celery-beat" --description="Celery beat for $app" --log="/var/log/$app/celery-beat.log"
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -63,8 +72,8 @@ ynh_script_progression "Starting $app's systemd service..."
 ynh_systemctl --service="$app" --action="start"
 
 # Celery
-    ynh_systemctl --service="$app-celery" --action="start"
-    ynh_systemctl --service="$app-celery-beat" --action="start"
+ynh_systemctl --service="$app-celery" --action="start"
+ynh_systemctl --service="$app-celery-beat" --action="start"
 
 #=================================================
 # END OF SCRIPT
