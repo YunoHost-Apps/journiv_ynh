@@ -7,7 +7,7 @@ name = "Journiv"
 description.en = "Self hosted private journaling"
 description.fr = "Journal intime privé auto-hébergé"
 
-version = "0.1.0-23~ynh1"
+version = "0.1.0-24~ynh1"
 
 maintainers = ["eric_G"]
 
@@ -43,8 +43,8 @@ ram.runtime = "500M"
     [resources.sources]
 
     [resources.sources.main]
-    url = "https://github.com/journiv/journiv-app/archive/refs/tags/v0.1.0-beta.23.tar.gz"
-    sha256 = "a0baa3f370b26522b475245d695638f3cd17f9e28bfb14cceb859d64d47931d4"
+    url = "https://github.com/journiv/journiv-app/archive/refs/tags/v0.1.0-beta.24.tar.gz"
+    sha256 = "4aef26b2df9fd71a01f96956a1752b5d5e891991a8f5433dd430b6aa7771d890"
     
     # beta tags are filtered anyway
     # autoupdate.strategy = "latest_github_tag"
