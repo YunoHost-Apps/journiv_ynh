@@ -48,9 +48,12 @@ chmod -R o-rwx "$install_dir"
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
-#ynh_script_progression "Updating $app's configuration files..."
+ynh_script_progression "Updating $app's configuration files..."
 
-#ynh_config_add --template=".env" --destination="$install_dir/.env"
+redis_db=$(ynh_app_setting_get --key=redis_db)
+celery_db=$(ynh_app_setting_get --key=celery_db)
+
+ynh_config_add --template=".env" --destination="$install_dir/.env"
 
 #=================================================
 # REAPPLY SYSTEM CONFIGURATION
