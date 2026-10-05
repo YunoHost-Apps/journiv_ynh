@@ -23,6 +23,16 @@ ynh_script_progression "Upgrading source files..."
 ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".config .env .local .venv"
 
 #=================================================
+# UPDATE A CONFIG FILE
+#=================================================
+ynh_script_progression "Updating $app's configuration files..."
+
+redis_db=$(ynh_app_setting_get --key=redis_db)
+celery_db=$(ynh_app_setting_get --key=celery_db)
+
+ynh_config_add --template=".env" --destination="$install_dir/.env"
+
+#=================================================
 # UPDATE MISE DEPENDENCIES
 #=================================================
 ynh_script_progression "Updating Mise dependencies..."
@@ -44,16 +54,6 @@ popd
 chown -R $app:$app "$install_dir"
 chmod -R 775 "$install_dir"
 chmod -R o-rwx "$install_dir"
-
-#=================================================
-# UPDATE A CONFIG FILE
-#=================================================
-ynh_script_progression "Updating $app's configuration files..."
-
-redis_db=$(ynh_app_setting_get --key=redis_db)
-celery_db=$(ynh_app_setting_get --key=celery_db)
-
-ynh_config_add --template=".env" --destination="$install_dir/.env"
 
 #=================================================
 # REAPPLY SYSTEM CONFIGURATION
