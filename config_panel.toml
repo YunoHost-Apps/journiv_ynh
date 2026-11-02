@@ -13,8 +13,8 @@ services = ["__APP__"]
     name.fr = "Options de configuration"
 
         [main.config.disable_signup]
-        ask.en = "Enable signup"
-        help.fr = "Activer l'enregistrement"
+        ask.en = "Disable signup"
+        help.fr = "Déctiver l'enregistrement"
         type = "boolean"
         bind = "DISABLE_SIGNUP:/var/www/__APP__/.env"
         default = false
