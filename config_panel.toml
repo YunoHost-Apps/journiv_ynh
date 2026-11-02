@@ -6,7 +6,7 @@ version = "1.0"
 [main]
 name.en = "Main configuration"
 name.fr = "Configuration principale"
-services = ["__APP__", "nginx"]
+services = ["__APP__"]
 
     [main.config]
     name.en = "Configuration Options"
