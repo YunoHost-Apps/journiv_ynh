@@ -1,0 +1,20 @@
+# https://yunohost.org/en/packaging_config_panels
+# https://github.com/YunoHost/example_ynh/blob/master/config_panel.toml.example
+
+version = "1.0"
+
+[main]
+name.en = "Main configuration"
+name.fr = "Configuration principale"
+services = ["__APP__", "nginx"]
+
+    [main.config]
+    name.en = "Configuration Options"
+    name.fr = "Options de configuration"
+
+        [main.config.disable_signup]
+        ask.en = "Enable signup"
+        help.fr = "Activer l'enregistrement"
+        type = "boolean"
+        bind = "DISABLE_SIGNUP:/var/www/__APP__/.env"
+        default = false
