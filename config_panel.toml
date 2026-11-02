@@ -17,4 +17,6 @@ services = ["__APP__"]
         help.fr = "Activer l'enregistrement"
         type = "boolean"
         bind = "DISABLE_SIGNUP:/var/www/__APP__/.env"
-        default = false
+        default = 0
+        yes = "true"
+        no = "false"
