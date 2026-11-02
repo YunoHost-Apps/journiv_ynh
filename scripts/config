@@ -19,3 +19,4 @@ set__disable_signup() {
     ynh_app_setting_set --key=disable_signup --value="$disable_signup"
 }
 
+ynh_app_config_run "$1"
