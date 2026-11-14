@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
+source /usr/share/yunohost/helpers
+
+#=================================================
+# RETRIEVE ARGUMENTS
+#=================================================
+
+get__disable_signup() {
+ynh_app_setting_get --key=disable_signup
+}
+
+set__disable_signup() {
+    ynh_replace --match='DISABLE_SIGNUP=[^"]*' --replace="DISABLE_SIGNUP=${disable_signup}" --file="${install_dir}/.env"
+    ynh_app_setting_set --key=disable_signup --value="$disable_signup"
+}
+
+ynh_app_config_run "$1"

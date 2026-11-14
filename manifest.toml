@@ -59,6 +59,12 @@ ram.runtime = "500M"
     [resources.permissions]
     main.url = "/"
 
+    api.url = "/api"
+    api.auth_header = false
+    api.allowed = "visitors"
+    api.show_tile = false
+    api.protected = true
+
     [resources.ports]
 
     [resources.apt]

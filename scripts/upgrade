@@ -20,6 +20,8 @@ ynh_systemctl --service="$app-celery-beat" --action="stop"
 #=================================================
 ynh_script_progression "Upgrading source files..."
 
+ynh_app_setting_set_default --key=disable_signup --value=false
+
 ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".config .env .local .venv"
 
 #=================================================
